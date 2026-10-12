@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Alice Helena | Telemetry & CS Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Oswald:wght@400;600;700&family=Inter:wght@400;600;700&family=Fira+Code:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-dark: #121212;
+            --bg-card: #1e1e1e;
+            --red-accent: #c4122e;
+            --text-light: #f5f5f5;
+            --text-muted: #a0a0a0;
+            --border-color: #2e2e2e;
+        }
+
+        * { box-sizing: border-box; }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: var(--bg-dark);
+            color: var(--text-light);
+            font-family: 'Inter', sans-serif;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4 {
+            font-family: 'Oswald', sans-serif;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        a { text-decoration: none; color: inherit; }
+
+        /* Navigation */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 8%;
+            background-color: rgba(18, 18, 18, 0.95);
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 2px solid var(--red-accent);
+            backdrop-filter: blur(8px);
+        }
+
+        .logo { font-size: 1.4rem; font-weight: 700; color: var(--red-accent); font-family: 'Oswald', sans-serif; }
+        .nav-links a { margin-left: 20px; font-weight: 600; font-size: 0.95rem; transition: color 0.2s; }
+        .nav-links a:hover { color: var(--red-accent); }
+
+        /* Hero */
+        .hero {
+            min-height: 90vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 120px 8% 60px;
+            background: radial-gradient(circle at 85% 20%, rgba(196, 18, 46, 0.18), transparent 45%), #121212;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .hero h1 { font-size: clamp(2.8rem, 6vw, 5rem); margin: 0; line-height: 1.05; }
+        .hero h2 { font-size: clamp(1.2rem, 3vw, 1.8rem); color: var(--red-accent); margin: 12px 0 20px; }
+        .hero p { max-width: 680px; font-size: 1.05rem; line-height: 1.6; color: var(--text-muted); margin-bottom: 30px; }
+
+        .hero-buttons { display: flex; gap: 15px; flex-wrap: wrap; }
+
+        .btn {
+            padding: 12px 26px;
+            font-family: 'Oswald', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            border-radius: 4px;
+            cursor: pointer;
+            display: inline-block;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary { background-color: var(--red-accent); color: #fff; border: 2px solid var(--red-accent); }
+        .btn-primary:hover { background-color: #9e0e24; border-color: #9e0e24; }
+
+        .btn-secondary { background-color: rgba(255, 255, 255, 0.08); color: #fff; border: 2px solid rgba(255, 255, 255, 0.25); }
+        .btn-secondary:hover { background-color: rgba(255, 255, 255, 0.18); }
+
+        /* Sections */
+        section { padding: 80px 8%; border-bottom: 1px solid var(--border-color); }
+        .section-title { font-size: 2.4rem; margin-bottom: 40px; display: inline-block; border-bottom: 3px solid var(--red-accent); padding-bottom: 6px; }
+
+        /* Resume Layout */
+        .resume-grid {
+            display: grid;
+            grid-template-columns: 320px 1fr;
+            gap: 36px;
+        }
+
+        .resume-sidebar {
+            background-color: var(--bg-card);
+            padding: 26px;
+            border-radius: 8px;
+            border-top: 4px solid var(--red-accent);
+            height: fit-content;
+        }
+
+        .resume-main { padding-left: 10px; }
+        .resume-main h3 { color: var(--red-accent); font-size: 1.5rem; margin-top: 32px; margin-bottom: 14px; border-bottom: 1px solid var(--border-color); padding-bottom: 8px; }
+        .resume-main h3:first-child { margin-top: 0; }
+
+        .resume-item { margin-bottom: 22px; }
+        .resume-item h4 { font-size: 1.2rem; margin: 0 0 4px; color: #fff; }
+        .resume-item .date { color: var(--red-accent); font-family: 'Fira Code', monospace; font-size: 0.85rem; margin-bottom: 8px; display: block; }
+        .resume-item p { margin: 0; line-height: 1.55; color: var(--text-muted); font-size: 0.95rem; }
+
+        .sidebar-section { margin-bottom: 24px; }
+        .sidebar-section:last-child { margin-bottom: 0; }
+        .sidebar-section h4 { font-size: 1.15rem; color: #fff; margin: 0 0 12px; }
+
+        .skill-tags { display: flex; flex-wrap: wrap; gap: 8px; }
+        .skill-tag { background-color: #2b2b2b; color: #fff; padding: 5px 10px; border-radius: 4px; font-size: 0.8rem; font-weight: 600; border: 1px solid #3d3d3d; }
+
+        .sidebar-list { list-style: none; padding: 0; margin: 0; }
+        .sidebar-list li { margin-bottom: 7px; color: var(--text-muted); font-size: 0.9rem; line-height: 1.4; display: flex; }
+        .sidebar-list li::before { content: '›'; color: var(--red-accent); margin-right: 8px; font-weight: bold; }
+
+        /* Projects */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+        }
+
+        .project-card {
+            background-color: var(--bg-card);
+            border-radius: 8px;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            border-top: 3px solid transparent;
+            border: 1px solid var(--border-color);
+        }
+        .project-card:hover { border-top: 3px solid var(--red-accent); }
+        .project-card h3 { font-size: 1.35rem; margin: 0 0 12px; }
+        .project-card p { color: var(--text-muted); line-height: 1.5; font-size: 0.95rem; flex-grow: 1; margin: 0; }
+
+        .project-footer {
+            margin-top: 20px;
+            padding-top: 16px;
+            border-top: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        /* Terminal */
+        .terminal-container {
+            background-color: #0c0c0c;
+            border: 1px solid #333;
+            border-radius: 6px;
+            padding: 16px;
+            font-family: 'Fira Code', monospace;
+            color: #4ade80;
+            height: 220px;
+            overflow-y: auto;
+            margin-top: 16px;
+            font-size: 0.9rem;
+        }
+
+        .terminal-input-line { display: flex; align-items: center; margin-top: 10px; }
+        .terminal-input-line span { color: #4ade80; margin-right: 8px; }
+        .terminal-input {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-family: 'Fira Code', monospace;
+            font-size: 0.9rem;
+            outline: none;
+            flex-grow: 1;
+        }
+
+        /* Rolling Tire */
+        .tire-container {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            width: 80px;
+            height: 80px;
+            z-index: 1000;
+            pointer-events: none;
+        }
+        .tire-container img { width: 100%; height: 100%; object-fit: contain; }
+
+        @media (max-width: 860px) {
+            .resume-grid { grid-template-columns: 1fr; }
+            .resume-main { padding-left: 0; }
+            nav { padding: 14px 5%; }
+            section { padding: 70px 5%; }
+            .tire-container { width: 60px; height: 60px; bottom: 15px; right: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">CAR #07 | ALICE HELENA</div>
+        <div class="nav-links">
+            <a href="#about">About</a>
+            <a href="#resume">Resume</a>
+            <a href="#projects">Projects</a>
+            <a href="mailto:helenaalice725@gmail.com">Contact</a>
+        </div>
+    </nav>
+
+    <section class="hero" id="about">
+        <h1>ALICE HELENA A.</h1>
+        <h2>Telemetry Data Analyst & CS Student</h2>
+        <p>I’m a B.Sc. Computer Science student with a strong interest in technology, data, motorsports, and cybersecurity. My long-term goal is to become a Telemetry Data Analyst in motorsports, combining my passion for racing with data analysis, programming, and problem-solving[span_1](start_span)[span_1](end_span).</p>
+        <div class="hero-buttons">
+            <a href="#projects" class="btn btn-primary">View Projects</a>
+            <a href="https://www.linkedin.com/in/alice-helena-48b137421" target="_blank" class="btn btn-secondary">LinkedIn Profile</a>
+            <a href="mailto:helenaalice725@gmail.com" class="btn btn-secondary">Email Me</a>
+        </div>
+    </section>
+
+    <section id="resume">
+        <h2 class="section-title">Driver Profile (Resume)</h2>
+        <div class="resume-grid">
+            
+            <div class="resume-sidebar">
+                <div class="sidebar-section">
+                    <h4>Programming & Cloud</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">C</span>
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">C++</span>
+                        <span class="skill-tag">SQL</span>
+                        <span class="skill-tag">AWS</span>
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>Core Competencies</h4>
+                    <ul class="sidebar-list">
+                        <li>Data Structures & Algorithms</li>
+                        <li>Problem Solving & Pseudocode</li>
+                        <li>Programming Fundamentals</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>Personal Strengths</h4>
+                    <ul class="sidebar-list">
+                        <li>Data-Driven Problem Solving</li>
+                        <li>Problem-solving mindset</li>
+                        <li>Willingness to learn new technologies</li>
+                        <li>Interest in real-world applications</li>
+                        <li>Creative approach to UI design</li>
+                        <li>Curiosity in programming & data</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>Interests</h4>
+                    <ul class="sidebar-list">
+                        <li>Motorsport Telemetry & Data</li>
+                        <li>Cybersecurity</li>
+                        <li>Game Development</li>
+                        <li>Application Development</li>
+                        <li>Automotive Technology</li>
+                        <li>Editing & Designing</li>
+                    </ul>
+                </div>
+
+                <div class="sidebar-section">
+                    <h4>Languages</h4>
+                    <div class="skill-tags">
+                        <span class="skill-tag">English</span>
+                        <span class="skill-tag">Tamil</span>
+                        <span class="skill-tag">Italian</span>
+                        <span class="skill-tag">Latin</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="resume-main">
+                <h3>Professional Summary</h3>
+                <p>I enjoy coding and building games and applications, while developing my skills in Python, C++, C, SQL, AWS, and HTML. I’m also exploring cybersecurity, with an interest in systems, networks, and data protection. Outside academics, I’m passionate about motorsports and the technology behind racing[span_2](start_span)[span_2](end_span).</p>
+
+                <h3>Experience</h3>
+                <div class="resume-item">
+                    <h4>Laughablehaha Community | Roblox Play Tester (QA)</h4>
+                    <span class="date">2024 - Present[span_3](start_span)[span_3](end_span)</span>
+                    <p>Assisted developers by identifying, reproducing, and documenting complex bugs and physics engine glitches. Executed test cases in multiplayer server environments to ensure stability and quality of new builds and updates[span_4](start_span)[span_4](end_span).</p>
+                </div>
+
+                <h3>Education</h3>
+                <div class="resume-item">
+                    <h4>Bishop Heber College</h4>
+                    <span class="date">2025 - 2029 (Expected)[span_5](start_span)[span_5](end_span)</span>
+                    <p>B.Sc. Computer Science. Relevant Coursework: Problem Solving using C, Data Structures and Algorithms, Programming and Problem Solving, Computer Science Fundamentals[span_6](start_span)[span_6](end_span).</p>
+                </div>
+
+                <div class="resume-item">
+                    <h4>St. Little Flower Matriculation Higher Secondary School, Kattur</h4>
+                    <span class="date">2010 - 2025[span_7](start_span)[span_7](end_span)</span>
+                    <p>12th Standard: 86% Total, with a perfect score of 100 in Computer Science. 10th Standard: 93% Total[span_8](start_span)[span_8](end_span).</p>
+                </div>
+
+                <h3>Academic Seminar</h3>
+                <div class="resume-item">
+                    <h4>Application of Jacobian in Robotics</h4>
+                    <span class="date">2024[span_9](start_span)[span_9](end_span)</span>
+                    <p>Studied the application of the Jacobian matrix in robotics. Explored a two-link robotic arm and applications such as bottle picking. Covered velocity calculation, trajectory planning, robot control, and singularity analysis[span_10](start_span)[span_10](end_span).</p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section id="projects">
+        <h2 class="section-title">Projects & System Telemetry</h2>
+        <div class="projects-grid">
+            
+            <div class="project-card">
+                <h3>F1 Telemetry Analysis Dashboard</h3>
+                <p>Extracting and analyzing fastF1 telemetry data using Python and Pandas to visualize cornering speeds, throttle application, and tire degradation trends across different circuits to simulate real-world race engineering decisions[span_11](start_span)[span_11](end_span).</p>
+                <div class="project-footer">
+                    <div class="skill-tags">
+                        <span class="skill-tag">Python</span>
+                        <span class="skill-tag">Pandas</span>
+                        <span class="skill-tag">FastF1</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Brunplayer7 App</h3>
+                <p>Designed and deployed an interactive application project hosted on GitHub Pages, featuring interactive UI layouts and real-time playback controls[span_12](start_span)[span_12](end_span).</p>
+                <div class="project-footer">
+                    <div class="skill-tags">
+                        <span class="skill-tag">App Dev</span>
+                        <span class="skill-tag">JavaScript</span>
+                    </div>
+                    <a href="https://alice-724.github.io/Brunplayer7/" target="_blank" class="btn btn-primary" style="padding: 6px 14px; font-size: 0.85rem;">View Project</a>
+                </div>
+            </div>
+
+            <div class="project-card">
+                <h3>Motorsport Portfolio & Telemetry Concept</h3>
+                <p>Designed a motorsport-themed personal portfolio website exploring the relationship between programming, telemetry metrics, and vehicle dynamics[span_13](start_span)[span_13](end_span).</p>
+                <div class="project-footer">
+                    <div class="skill-tags">
+                        <span class="skill-tag">HTML</span>
+                        <span class="skill-tag">CSS</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="project-card" style="margin-top: 26px;">
+            <h3>Interactive C Terminal: Student Management System</h3>
+            <p>Direct emulation of the C program modules including structure storage, attendance computation, and rank calculation[span_14](start_span)[span_14](end_span)[span_15](start_span)[span_15](end_span).</p>
+            
+            <div class="terminal-container" id="terminal-screen" onclick="document.getElementById('cmd-input').focus()">
+                <div id="term-output">
+                    [SYSTEM READY] Running student_management_system.c<br>
+                    ===================================<br>
+                    1. Student Registration Module<br>
+                    2. Student Profile Module<br>
+                    3. Course Management Module<br>
+                    4. Marks Management Module<br>
+                    5. Exit Module<br>
+                    ===================================<br>
+                </div>
+                <div class="terminal-input-line">
+                    <span>user@hebersys:~$</span>
+                    <input type="text" id="cmd-input" class="terminal-input" autocomplete="off" placeholder="Enter option (1-5)">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="tire-container">
+        <img src="Tire.png" alt="Pirelli Tire" id="rolling-tire">
+    </div>
+
+    <script>
+        // Tire rotation on scroll
+        window.addEventListener('scroll', () => {
+            const tire = document.getElementById('rolling-tire');
+            if (tire) {
+                tire.style.transform = `rotate(${window.scrollY * 0.35}deg)`;
+            }
+        });
+
+        // Terminal logic
+        const input = document.getElementById('cmd-input');
+        const output = document.getElementById('term-output');
+        const screen = document.getElementById('terminal-screen');
+
+        let students = [
+            { id: 1001, name: "Alice Helena", course: "B.Sc CS", attendance: 96, avg: 94.2, grade: 'A' }
+        ];
+
+        input.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') {
+                const choice = input.value.trim();
+                output.innerHTML += `<div><strong>> ${choice}</strong></div>`;
+                input.value = '';
+
+                switch (choice) {
+                    case '1':
+                        output.innerHTML += `<div>Assigned ID: ${1001 + students.length}. Registration simulated in sandbox.</div>`;
+                        break;
+                    case '2':
+                        output.innerHTML += `<div>Displaying Records:</div>`;
+                        students.forEach(s => {
+                            output.innerHTML += `<div>ID: ${s.id} | Name: ${s.name} | Course: ${s.course} | Att: ${s.attendance}%</div>`;
+                        });
+                        break;
+                    case '3':
+                        output.innerHTML += `<div>Current Active Course: B.Sc Computer Science (Bishop Heber College)</div>`;
+                        break;
+                    case '4':
+                        output.innerHTML += `<div>Rank 1: ${students[0].name} | Avg: ${students[0].avg}% | Grade: ${students[0].grade}</div>`;
+                        break;
+                    case '5':
+                        output.innerHTML += `<div>Saving records to students.dat... Exited.</div>`;
+                        break;
+                    default:
+                        output.innerHTML+= `<div>Invalid option. Enter 1 to 5.</div>`;
+                }
+                screen.scrollTop = screen.scrollHeight;
+            }
+        });
+    </script>
+</body>
+</html>
